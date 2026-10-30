@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * Section Flash Sale và Banner ưu đãi chính
+ * Banner quảng cáo & Flash Sale với phong cách thiết kế hiện đại, thanh lịch
  */
 
 import React from "react";
-import { Flame, Clock, ShieldCheck, Truck, Zap } from "lucide-react";
+import { Clock, ShieldCheck, Truck, RotateCcw, Sparkles } from "lucide-react";
 import { useCountdown } from "@/hooks/use-countdown";
 import { STORE_CONFIG } from "@/data/constants";
 
@@ -13,72 +13,65 @@ export function FlashSaleSection() {
   const { formattedHours, formattedMinutes, formattedSeconds } = useCountdown(2, 45, 18);
 
   return (
-    <section aria-label="Khuyến mãi Flash Sale" className="bg-white pb-2.5">
-      {/* Banner chính */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-amber-500 to-red-500 text-white p-4 mx-3 mt-3 rounded-xl shadow-xs">
-        <div className="relative z-10 max-w-[70%]">
-          <div className="inline-flex items-center gap-1 bg-yellow-400 text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider mb-1">
-            <Zap className="w-3 h-3 fill-black" /> Hot Deals
+    <section aria-label="Khuyến mãi nổi bật" className="px-4 pt-3.5 pb-2">
+      {/* Banner chính tinh tế */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-stone-900 via-stone-850 to-orange-950 text-white p-5 shadow-card border border-stone-800/60">
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-1.5 bg-orange-500/20 text-orange-400 border border-orange-500/30 font-semibold text-[10px] px-2.5 py-0.5 rounded-full uppercase tracking-wider mb-2 backdrop-blur-xs">
+            <Sparkles className="w-3 h-3 text-orange-400" />
+            <span>Flash Deal Hôm Nay</span>
           </div>
-          <h2 className="text-xl font-black leading-tight tracking-tight drop-shadow-xs">
-            BEST SELLING PRODUCTS
+
+          <h2 className="text-xl font-extrabold tracking-tight text-white leading-tight">
+            Ưu Đãi Đặc Sản & Thực Phẩm
           </h2>
-          <p className="text-[11px] text-yellow-100 mt-1 font-medium">
-            {STORE_CONFIG.slogan}
+
+          <p className="text-xs text-stone-300 mt-1 max-w-[280px] leading-relaxed">
+            {STORE_CONFIG.slogan} — Giảm tới <span className="text-orange-400 font-bold">50%</span> các combo bán chạy nhất.
           </p>
+
+          {/* Bộ đếm ngược thời gian kiểu hiện đại */}
+          <div className="mt-4 flex items-center gap-2">
+            <div className="flex items-center gap-1 text-[11px] text-stone-400">
+              <Clock className="w-3.5 h-3.5 text-orange-400" />
+              <span>Kết thúc sau:</span>
+            </div>
+
+            <div className="flex items-center gap-1 font-mono text-xs font-bold">
+              <span className="bg-white/10 px-2 py-0.5 rounded border border-white/10 text-white">
+                {formattedHours}h
+              </span>
+              <span className="text-stone-500">:</span>
+              <span className="bg-white/10 px-2 py-0.5 rounded border border-white/10 text-white">
+                {formattedMinutes}m
+              </span>
+              <span className="text-stone-500">:</span>
+              <span className="bg-white/10 px-2 py-0.5 rounded border border-white/10 text-orange-400">
+                {formattedSeconds}s
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* Huy hiệu giảm giá tròn */}
-        <div className="absolute -right-2 -bottom-2 bg-yellow-400 text-red-600 w-24 h-24 rounded-full flex flex-col items-center justify-center font-black rotate-[-12deg] shadow-lg border-2 border-white">
-          <span className="text-xs uppercase">GIẢM TỚI</span>
-          <span className="text-2xl leading-none">50%</span>
-          <span className="text-[9px] text-black">HÔM NAY</span>
-        </div>
+        {/* Ánh sáng nền trang trí trang nhã */}
+        <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-500/20 rounded-full blur-2xl pointer-events-none" />
       </div>
 
-      {/* Cam kết thương hiệu */}
-      <div className="grid grid-cols-3 gap-1 px-3 mt-2.5 text-[10px] text-gray-600 font-medium">
-        <div className="flex items-center gap-1 justify-center bg-orange-50/60 py-1.5 rounded">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#ee4d2d]" />
-          <span>100% Chính Hãng</span>
+      {/* Dải cam kết uy tín tối giản */}
+      <div className="grid grid-cols-3 gap-2 mt-2.5">
+        <div className="flex items-center gap-1.5 p-2 rounded-xl bg-stone-50 border border-stone-200/60 text-[11px] text-stone-700 font-medium">
+          <ShieldCheck className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+          <span className="truncate">100% Chính Hãng</span>
         </div>
-        <div className="flex items-center gap-1 justify-center bg-orange-50/60 py-1.5 rounded">
-          <Truck className="w-3.5 h-3.5 text-[#ee4d2d]" />
-          <span>Freeship COD</span>
+        <div className="flex items-center gap-1.5 p-2 rounded-xl bg-stone-50 border border-stone-200/60 text-[11px] text-stone-700 font-medium">
+          <Truck className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+          <span className="truncate">Kiểm tra khi nhận</span>
         </div>
-        <div className="flex items-center gap-1 justify-center bg-orange-50/60 py-1.5 rounded">
-          <Zap className="w-3.5 h-3.5 text-[#ee4d2d]" />
-          <span>Giao Nhanh 24h</span>
-        </div>
-      </div>
-
-      {/* Khối Flash Sale */}
-      <div className="mt-3 px-3">
-        <div className="flex items-center justify-between bg-gradient-to-r from-red-600 to-orange-500 text-white px-3 py-1.5 rounded-t-lg">
-          <div className="flex items-center gap-1.5">
-            <Flame className="w-4 h-4 fill-yellow-300 text-yellow-300 animate-bounce" />
-            <span className="font-extrabold text-xs uppercase tracking-wide">
-              FLASH SALE
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1 text-[11px] font-mono">
-            <Clock className="w-3.5 h-3.5" />
-            <span className="bg-black/60 px-1 py-0.5 rounded text-[10px] font-bold">
-              {formattedHours}
-            </span>
-            <span>:</span>
-            <span className="bg-black/60 px-1 py-0.5 rounded text-[10px] font-bold">
-              {formattedMinutes}
-            </span>
-            <span>:</span>
-            <span className="bg-black/60 px-1 py-0.5 rounded text-[10px] font-bold">
-              {formattedSeconds}
-            </span>
-          </div>
+        <div className="flex items-center gap-1.5 p-2 rounded-xl bg-stone-50 border border-stone-200/60 text-[11px] text-stone-700 font-medium">
+          <RotateCcw className="w-3.5 h-3.5 text-orange-600 shrink-0" />
+          <span className="truncate">Đổi trả 7 ngày</span>
         </div>
       </div>
     </section>
   );
 }
-

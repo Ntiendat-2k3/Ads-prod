@@ -2,7 +2,7 @@
 
 /**
  * Khung nội dung chính của Landing Page
- * Quản lý trạng thái tương tác và kết hợp các section theo kiến trúc hướng khối (Section-Based)
+ * Tối giản giao diện, lược bỏ thanh điều hướng giả lập không cần thiết
  */
 
 import React, { useState } from "react";
@@ -10,7 +10,6 @@ import { Product } from "@/types/product";
 import { useProductFilter } from "@/hooks/use-product-filter";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { BottomNav } from "@/components/layout/bottom-nav";
 import { FlashSaleSection } from "@/components/sections/flash-sale-section";
 import { CategorySection } from "@/components/sections/category-section";
 import { ProductGridSection } from "@/components/sections/product-grid-section";
@@ -39,18 +38,18 @@ export function LandingContent({ initialProducts }: LandingContentProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header Shopee Mobile */}
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Header thương hiệu tối giản */}
       <Header
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         productCount={initialProducts.length}
       />
 
-      {/* Banner Flash Sale (Ẩn khi đang gõ tìm kiếm) */}
+      {/* Banner Flash Sale thanh lịch (Tự động ẩn khi tìm kiếm) */}
       {!searchQuery && <FlashSaleSection />}
 
-      {/* Danh mục dạng tabs */}
+      {/* Bộ lọc danh mục dạng pills */}
       <CategorySection
         categories={categories}
         selectedCategory={selectedCategory}
@@ -67,10 +66,10 @@ export function LandingContent({ initialProducts }: LandingContentProps) {
         onResetFilters={resetFilters}
       />
 
-      {/* FAQ hỗ trợ tăng tỷ lệ chuyển đổi và SEO */}
+      {/* Phần hỏi đáp tăng uy tín */}
       <FAQSection />
 
-      {/* Footer thông tin cửa hàng & cam kết */}
+      {/* Footer thông tin cửa hàng */}
       <Footer />
 
       {/* Modal chi tiết gói combo sản phẩm */}
@@ -79,12 +78,8 @@ export function LandingContent({ initialProducts }: LandingContentProps) {
         onClose={() => setSelectedProduct(null)}
       />
 
-      {/* Nút hỗ trợ admin đồng bộ dữ liệu tức thì */}
+      {/* Nút hỗ trợ admin đồng bộ Google Sheet tức thì */}
       <SyncSheetButton />
-
-      {/* Thanh điều hướng cố định dưới đáy */}
-      <BottomNav />
     </div>
   );
 }
-

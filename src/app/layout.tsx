@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     "Men vi sinh thú cưng",
     "Đường la hán quả",
     "Đặc sản nhập khẩu",
-    "Shopee Philippines",
     "Freeship COD",
   ],
   authors: [{ name: STORE_CONFIG.name }],
@@ -80,7 +79,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#ee4d2d",
+  themeColor: "#ea580c",
 };
 
 export default function RootLayout({
@@ -90,9 +89,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" className={inter.variable}>
-      <body className="bg-neutral-900 min-h-screen flex justify-center text-gray-900 font-sans antialiased selection:bg-orange-500 selection:text-white">
-        {/* Khung mô phỏng điện thoại di động: căn giữa trên màn hình lớn, 100% trên điện thoại */}
-        <div className="w-full max-w-md min-h-screen bg-[#f5f5f5] shadow-2xl relative flex flex-col">
+      <body className="bg-stone-100/70 min-h-screen text-stone-900 font-sans antialiased selection:bg-orange-500 selection:text-white">
+        {/* Khung giao diện cao cấp: 100% fluid trên điện thoại, thanh lịch trên màn hình lớn */}
+        <div className="w-full max-w-xl mx-auto min-h-screen bg-white shadow-soft relative flex flex-col">
           {children}
         </div>
       </body>

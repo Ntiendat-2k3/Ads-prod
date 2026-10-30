@@ -1,11 +1,12 @@
 "use client";
 
 /**
- * Header giao diện phong cách Shopee chuẩn Mobile
+ * Header tối giản, hiện đại và sang trọng (Clean Modern Header)
+ * Lược bỏ các biểu tượng giả lập không cần thiết, tập trung vào tìm kiếm và nhận diện thương hiệu
  */
 
 import React from "react";
-import { Search, ShoppingCart, MessageCircle, Camera, Sparkles } from "lucide-react";
+import { Search, X, ShieldCheck, PhoneCall } from "lucide-react";
 import { STORE_CONFIG } from "@/data/constants";
 
 interface HeaderProps {
@@ -16,67 +17,61 @@ interface HeaderProps {
 
 export function Header({ searchQuery, onSearchChange, productCount }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-40 bg-gradient-to-r from-[#ee4d2d] to-[#ff5722] text-white shadow-md">
-      {/* Thanh thông tin shop */}
-      <div className="flex items-center justify-between px-3.5 pt-2.5 pb-1.5">
-        <div className="flex items-center gap-1.5">
-          <div className="bg-white/20 p-1 rounded-full">
-            <Sparkles className="w-4 h-4 text-yellow-300" />
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200/80 transition-all duration-200">
+      {/* Hàng trên: Logo & Hotline tư vấn */}
+      <div className="flex items-center justify-between px-4 pt-3 pb-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center text-white font-black text-sm shadow-xs">
+            TP
           </div>
-          <span className="font-bold text-base tracking-tight drop-shadow-sm">
-            {STORE_CONFIG.shortName}
-          </span>
-          <span className="bg-white/20 text-[10px] font-medium px-1.5 py-0.5 rounded-full ml-1">
-            {productCount} items
-          </span>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <span className="font-extrabold text-stone-900 text-base tracking-tight leading-none">
+                {STORE_CONFIG.shortName}
+              </span>
+              <span className="inline-flex items-center gap-0.5 text-[9px] font-semibold bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded-full border border-emerald-200/60">
+                <ShieldCheck className="w-2.5 h-2.5" /> Official
+              </span>
+            </div>
+            <p className="text-[10px] text-stone-500 font-medium mt-0.5">
+              {productCount} sản phẩm tuyển chọn
+            </p>
+          </div>
         </div>
 
-        {/* Các biểu tượng giỏ hàng & tin nhắn */}
-        <div className="flex items-center gap-1">
-          <button
-            type="button"
-            aria-label="Tin nhắn thông báo"
-            className="relative p-2 hover:opacity-80 transition cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
-          >
-            <MessageCircle className="w-5 h-5" />
-            <span className="absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
-              2
-            </span>
-          </button>
-          <button
-            type="button"
-            aria-label="Giỏ hàng mua sắm"
-            className="relative p-2 hover:opacity-80 transition cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center"
-          >
-            <ShoppingCart className="w-5 h-5" />
-            <span className="absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold rounded-full w-3.5 h-3.5 flex items-center justify-center">
-              5
-            </span>
-          </button>
-        </div>
+        {/* Nút gọi hotline hỗ trợ nhanh (CTA thực tế thay vì giỏ hàng giả) */}
+        <a
+          href={`tel:${STORE_CONFIG.hotline.replace(/[^0-9+]/g, "")}`}
+          className="inline-flex items-center gap-1 text-[11px] font-semibold text-stone-700 bg-stone-100/80 hover:bg-stone-100 px-2.5 py-1.5 rounded-full border border-stone-200/60 transition cursor-pointer"
+        >
+          <PhoneCall className="w-3 h-3 text-orange-600" />
+          <span>Hotline</span>
+        </a>
       </div>
 
-      {/* Thanh tìm kiếm phong cách Shopee */}
-      <div className="px-3.5 pb-2.5">
+      {/* Hàng dưới: Thanh tìm kiếm sản phẩm tối giản */}
+      <div className="px-4 pb-3">
         <div className="relative flex items-center">
-          <Search className="absolute left-3 w-4 h-4 text-gray-400 pointer-events-none" />
+          <Search className="absolute left-3.5 w-4 h-4 text-stone-400 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Tìm món ngon, đồ ăn vặt, sốt cay, men vi sinh..."
-            className="w-full pl-9 pr-8 py-2 rounded bg-white text-gray-800 text-xs placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 shadow-inner"
+            placeholder="Tìm theo tên sản phẩm, sốt cay, men vi sinh..."
+            className="w-full pl-9 pr-9 py-2 rounded-xl bg-stone-100/70 border border-transparent text-stone-900 text-xs placeholder:text-stone-400 focus:outline-none focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all duration-200"
           />
-          <Camera className="absolute right-3 w-4 h-4 text-gray-400 cursor-pointer" />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => onSearchChange("")}
+              aria-label="Xóa từ khóa tìm kiếm"
+              className="absolute right-3 p-0.5 rounded-full text-stone-400 hover:text-stone-700 transition"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
-      </div>
-
-      {/* Dòng ticker ưu đãi freeship */}
-      <div className="bg-[#d73211] px-3.5 py-1 text-[11px] flex items-center justify-between font-medium">
-        <span>🚚 {STORE_CONFIG.shippingPolicy}</span>
-        <span className="text-yellow-300 font-semibold">Ưu đãi hôm nay</span>
       </div>
     </header>
   );
 }
-

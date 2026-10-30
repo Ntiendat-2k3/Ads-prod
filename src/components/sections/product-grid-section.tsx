@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Section hiển thị lưới sản phẩm 2 cột kèm sắp xếp và trạng thái rỗng
+ * Section hiển thị lưới sản phẩm 2 cột kèm sắp xếp và bộ lọc
  */
 
 import React from "react";
@@ -25,20 +25,20 @@ export function ProductGridSection({
   onResetFilters,
 }: ProductGridSectionProps) {
   return (
-    <section aria-label="Danh sách sản phẩm" className="flex-1">
-      {/* Thanh điều khiển sắp xếp */}
-      <div className="bg-white px-3 py-2 border-b border-gray-100 flex items-center justify-between text-xs text-gray-600">
-        <span className="font-medium">
-          Hiển thị: <strong className="text-gray-900">{products.length}</strong> sản phẩm
+    <section aria-label="Danh sách sản phẩm" className="flex-1 pb-6">
+      {/* Thanh điều khiển số lượng & sắp xếp */}
+      <div className="px-4 py-2.5 flex items-center justify-between text-xs text-stone-500 border-b border-stone-100">
+        <span>
+          <strong className="text-stone-900 font-bold">{products.length}</strong> sản phẩm có sẵn
         </span>
 
-        <div className="flex items-center gap-1">
-          <ArrowUpDown className="w-3.5 h-3.5 text-gray-400" />
+        <div className="flex items-center gap-1.5 bg-stone-100/70 px-2.5 py-1 rounded-lg">
+          <ArrowUpDown className="w-3 h-3 text-stone-400" />
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
             aria-label="Sắp xếp sản phẩm"
-            className="bg-transparent font-medium text-gray-700 focus:outline-none cursor-pointer py-1"
+            className="bg-transparent font-medium text-stone-700 focus:outline-none cursor-pointer text-xs"
           >
             <option value="default">Phổ biến</option>
             <option value="best_seller">Bán chạy nhất</option>
@@ -48,10 +48,10 @@ export function ProductGridSection({
         </div>
       </div>
 
-      {/* Lưới sản phẩm 2 cột (Grid-cols-2) */}
-      <div className="px-3 pt-3">
+      {/* Lưới sản phẩm 2 cột */}
+      <div className="px-4 pt-3.5">
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-3.5">
             {products.map((product) => (
               <ProductCard
                 key={product.id}
@@ -61,16 +61,16 @@ export function ProductGridSection({
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-lg p-8 text-center text-gray-500 my-4 shadow-2xs">
-            <AlertCircle className="w-10 h-10 text-gray-300 mx-auto mb-2" />
-            <p className="text-sm font-medium">Không tìm thấy sản phẩm phù hợp</p>
-            <p className="text-xs text-gray-400 mt-1">
-              Thử tìm kiếm với từ khóa khác hoặc chuyển danh mục
+          <div className="bg-stone-50 rounded-2xl p-8 text-center text-stone-500 my-4 border border-stone-200/60">
+            <AlertCircle className="w-10 h-10 text-stone-300 mx-auto mb-2" />
+            <p className="text-sm font-semibold text-stone-800">Không tìm thấy sản phẩm phù hợp</p>
+            <p className="text-xs text-stone-400 mt-1">
+              Thử tìm kiếm với từ khóa khác hoặc bấm nút bên dưới để xem lại tất cả
             </p>
             <button
               type="button"
               onClick={onResetFilters}
-              className="mt-3 text-xs text-[#ee4d2d] font-bold underline cursor-pointer p-2"
+              className="mt-3.5 inline-flex text-xs text-orange-600 font-bold underline cursor-pointer p-1.5"
             >
               Xem tất cả sản phẩm
             </button>
@@ -80,4 +80,3 @@ export function ProductGridSection({
     </section>
   );
 }
-

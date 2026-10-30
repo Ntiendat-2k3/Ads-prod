@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Section hỏi đáp thường gặp (FAQ Accordion)
+ * Section câu hỏi thường gặp (Minimalist FAQ Accordion)
  */
 
 import React, { useState } from "react";
@@ -10,20 +10,27 @@ import { FAQ_ITEMS } from "@/data/constants";
 import { cn } from "@/lib/utils";
 
 export function FAQSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0); // Mở sẵn câu đầu tiên cho tiện xem
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <section aria-label="Câu hỏi thường gặp" className="mt-6 mx-3">
-      <div className="bg-white rounded-xl p-3.5 shadow-2xs border border-gray-100">
-        <div className="flex items-center gap-1.5 mb-3">
-          <HelpCircle className="w-4 h-4 text-[#ee4d2d]" />
-          <h2 className="text-xs font-bold text-gray-900 uppercase tracking-wide">
-            Câu Hỏi Thường Gặp (FAQ)
-          </h2>
+    <section aria-label="Câu hỏi thường gặp" className="px-4 py-4">
+      <div className="bg-white rounded-2xl p-4 border border-stone-200/80 shadow-xs">
+        <div className="flex items-center gap-2 mb-3.5">
+          <div className="p-1.5 rounded-lg bg-orange-50 text-orange-600">
+            <HelpCircle className="w-4 h-4" />
+          </div>
+          <div>
+            <h2 className="text-xs font-bold text-stone-900 uppercase tracking-wider">
+              Câu Hỏi Thường Gặp
+            </h2>
+            <p className="text-[10px] text-stone-500">
+              Giải đáp thắc mắc về chính sách giao nhận và thanh toán
+            </p>
+          </div>
         </div>
 
         <div className="space-y-2">
@@ -33,24 +40,24 @@ export function FAQSection() {
             return (
               <div
                 key={idx}
-                className="border border-gray-100 rounded-lg overflow-hidden transition-colors"
+                className="border border-stone-200/70 rounded-xl overflow-hidden transition-colors"
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full flex items-center justify-between p-2.5 text-left text-xs font-semibold text-gray-800 bg-gray-50/70 hover:bg-gray-100 transition cursor-pointer min-h-[44px]"
+                  className="w-full flex items-center justify-between p-3 text-left text-xs font-semibold text-stone-800 bg-stone-50/70 hover:bg-stone-100/80 transition cursor-pointer min-h-[44px]"
                 >
                   <span className="pr-2">{item.question}</span>
                   <ChevronDown
                     className={cn(
-                      "w-4 h-4 text-gray-400 transition-transform duration-200 shrink-0",
-                      isOpen && "rotate-180 text-[#ee4d2d]"
+                      "w-4 h-4 text-stone-400 transition-transform duration-200 shrink-0",
+                      isOpen && "rotate-180 text-orange-600"
                     )}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="p-2.5 text-[11px] text-gray-600 bg-white border-t border-gray-100 leading-relaxed animate-in fade-in duration-200">
+                  <div className="p-3 text-[11px] text-stone-600 bg-white border-t border-stone-100 leading-relaxed animate-in fade-in duration-150">
                     {item.answer}
                   </div>
                 )}
@@ -62,4 +69,3 @@ export function FAQSection() {
     </section>
   );
 }
-

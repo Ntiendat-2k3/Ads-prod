@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Modal xem chi tiết và chọn gói combo sản phẩm
+ * Modal xem chi tiết và chọn gói combo ưu đãi (Modern Quick-View Sheet)
  */
 
 import React, { useState } from "react";
@@ -9,7 +9,6 @@ import { ExternalLink, ShieldCheck, Truck, CheckCircle2, Gift } from "lucide-rea
 import { Product } from "@/types/product";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { formatPHP } from "@/lib/utils";
 
 interface ProductDetailModalProps {
@@ -32,19 +31,21 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
 
   const modalTitle = (
     <div className="flex items-center gap-2">
-      <Badge variant="shopee" size="sm" className="rounded-full">
+      <span className="text-[10px] font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200/60">
         {product.category}
-      </Badge>
-      <span className="text-xs text-gray-500 font-mono">STT: #{product.stt}</span>
+      </span>
+      {product.code && (
+        <span className="text-xs text-stone-400 font-mono">#{product.code}</span>
+      )}
     </div>
   );
 
   return (
     <Modal isOpen={Boolean(product)} onClose={onClose} title={modalTitle}>
-      <div className="p-4 overflow-y-auto space-y-3.5 no-scrollbar">
+      <div className="p-4 overflow-y-auto space-y-4 no-scrollbar">
         {/* Ảnh & thông tin giá cơ bản */}
-        <div className="flex gap-3">
-          <div className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-100 bg-gray-50">
+        <div className="flex gap-3.5">
+          <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-stone-200/70 bg-stone-100">
             <img
               src={product.image}
               alt={product.name}
@@ -53,32 +54,35 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
           </div>
 
           <div className="flex-1 flex flex-col justify-center">
-            <h2 className="text-sm font-bold text-gray-900 leading-snug">
+            <h2 className="text-sm font-extrabold text-stone-900 leading-snug">
               {product.name}
             </h2>
-            <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-lg font-extrabold text-[#ee4d2d]">
+
+            <div className="flex items-baseline gap-2 mt-1.5">
+              <span className="text-lg font-black text-stone-900">
                 {formatPHP(product.displayPrice)}
               </span>
-              <span className="text-xs text-gray-400 line-through">
+              <span className="text-xs text-stone-400 line-through">
                 {formatPHP(product.originalPrice)}
               </span>
-              <Badge variant="warning" size="sm">
+              <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-1.5 py-0.5 rounded">
                 -{product.discountPercent}%
-              </Badge>
+              </span>
             </div>
-            <p className="text-[11px] text-gray-500 mt-1 flex items-center gap-1">
-              <Truck className="w-3 h-3 text-emerald-600" /> Miễn phí giao hàng toàn quốc
+
+            <p className="text-[11px] text-stone-500 mt-1 flex items-center gap-1">
+              <Truck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span>Giao hàng COD tận nơi tại Philippines</span>
             </p>
           </div>
         </div>
 
         {/* Các gói combo ưu đãi */}
         <div>
-          <div className="flex items-center gap-1.5 mb-2">
-            <Gift className="w-4 h-4 text-[#ee4d2d]" />
-            <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wide">
-              Chọn gói khuyến mãi (Bảng giá chi tiết):
+          <div className="flex items-center gap-1.5 mb-2.5">
+            <Gift className="w-4 h-4 text-orange-600" />
+            <h3 className="text-xs font-bold text-stone-900 uppercase tracking-wide">
+              Bảng giá các gói ưu đãi:
             </h3>
           </div>
 
@@ -86,6 +90,8 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
             <div className="space-y-2" role="radiogroup" aria-label="Danh sách gói combo">
               {product.combos.map((combo, idx) => {
                 const isSelected = selectedComboIndex === idx;
+                const isBestValue = idx === product.combos.length - 1 && product.combos.length > 1;
+
                 return (
                   <div
                     key={idx}
@@ -98,23 +104,31 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
                         setSelectedComboIndex(idx);
                       }
                     }}
-                    className={`p-2.5 rounded-lg border text-xs cursor-pointer flex items-center justify-between transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ee4d2d] ${
+                    className={`p-3 rounded-xl border text-xs cursor-pointer flex items-center justify-between transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
                       isSelected
-                        ? "border-[#ee4d2d] bg-orange-50/70 text-gray-900 shadow-2xs"
-                        : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                        ? "border-orange-500 bg-orange-50/50 text-stone-900 shadow-xs"
+                        : "border-stone-200/80 bg-white hover:border-stone-300 text-stone-700"
                     }`}
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2.5">
                       <CheckCircle2
                         className={`w-4 h-4 shrink-0 ${
-                          isSelected ? "text-[#ee4d2d]" : "text-gray-300"
+                          isSelected ? "text-orange-600" : "text-stone-300"
                         }`}
                       />
-                      <span className="font-semibold text-gray-800">
-                        {combo.quantityText}
-                      </span>
+                      <div>
+                        <span className="font-bold text-stone-900 block">
+                          {combo.quantityText}
+                        </span>
+                        {isBestValue && (
+                          <span className="text-[9px] font-bold text-orange-600 uppercase">
+                            ⭐ Gói tiết kiệm nhất
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <span className="font-extrabold text-[#ee4d2d]">
+
+                    <span className="font-extrabold text-orange-600 text-xs">
                       {combo.priceText}
                     </span>
                   </div>
@@ -122,39 +136,38 @@ export function ProductDetailModal({ product, onClose }: ProductDetailModalProps
               })}
             </div>
           ) : (
-            <div className="p-3 bg-gray-50 rounded text-xs text-gray-600 whitespace-pre-line border border-gray-100">
-              {product.rawPrice || "Liên hệ để nhận báo giá chi tiết"}
+            <div className="p-3 bg-stone-50 rounded-xl text-xs text-stone-600 whitespace-pre-line border border-stone-200/60">
+              {product.rawPrice || "Liên hệ hotline để nhận báo giá chi tiết"}
             </div>
           )}
         </div>
 
-        {/* Chính sách bán hàng */}
-        <div className="bg-amber-50/60 p-2.5 rounded-lg border border-amber-100/80 text-[11px] text-amber-900 space-y-1">
-          <div className="flex items-center gap-1.5 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-            <span>Kiểm tra hàng trước khi thanh toán (COD tận nhà)</span>
+        {/* Cam kết mua hàng */}
+        <div className="bg-stone-50 p-3 rounded-xl border border-stone-200/60 text-[11px] text-stone-600 space-y-1.5">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-3.5 h-3.5 text-stone-700 shrink-0" />
+            <span>Được quyền mở hộp kiểm tra đúng hàng trước khi thanh toán COD</span>
           </div>
-          <div className="flex items-center gap-1.5 font-medium">
-            <Truck className="w-3.5 h-3.5 text-amber-700 shrink-0" />
-            <span>Đổi trả 1-1 trong 7 ngày nếu lỗi từ nhà sản xuất</span>
+          <div className="flex items-center gap-2">
+            <Truck className="w-3.5 h-3.5 text-stone-700 shrink-0" />
+            <span>Đổi trả 1-1 trong 7 ngày nếu có lỗi từ nhà sản xuất</span>
           </div>
         </div>
       </div>
 
-      {/* Footer modal */}
-      <div className="p-3 border-t border-gray-100 bg-gray-50">
+      {/* Nút đặt mua trực tiếp */}
+      <div className="p-3.5 border-t border-stone-100 bg-white">
         <Button
           onClick={handleGoToLandingPage}
           fullWidth
           variant="primary"
           size="lg"
-          className="gap-1.5"
+          className="gap-2 bg-stone-900 hover:bg-stone-850 text-white rounded-xl shadow-md"
         >
-          <span>MUA NGAY TẠI TRANG CHÍNH THỨC</span>
+          <span>ĐẶT MUA NGAY (TRANG CHÍNH THỨC)</span>
           <ExternalLink className="w-4 h-4" />
         </Button>
       </div>
     </Modal>
   );
 }
-
